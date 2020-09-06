@@ -59,7 +59,9 @@ transactionsRouter.post(
       const transactions = await importTransactions.execute(request.file.path);
       return response.json(transactions);
     } catch (err) {
-      console.log(err);
+      return response
+        .status(err.statusCode)
+        .json({ status: 'error', message: err.message });
     }
   },
 );
